@@ -1,29 +1,22 @@
+/**
+ * Interns: 6 days a year, up to 2 days per request.
+ */
 public class Intern extends Employee {
 
-    public Intern(int id, String name, String dept) {
-        super(id, name, dept, 6);
-    }
+    private static final int ANNUAL_ENTITLEMENT = 6;
+    private static final int MAX_DAYS_PER_REQUEST = 2;
 
-    @Override
-    public void applyLeave(int d) {
-        if (d <= 0) {
-            System.out.println("Invalid number of days.");
-            return;
-        }
-        if (d > 2) {
-            System.out.println(getEmployeeName() + ": interns can take at most 2 days at a time.");
-            return;
-        }
-        if (d > checkLeaveBalance()) {
-            System.out.println(getEmployeeName() + ": insufficient leave balance.");
-            return;
-        }
-        deduct(d);
-        System.out.println(getEmployeeName() + " (Intern) leave approved for " + d + " day(s).");
+    public Intern(int employeeId, String employeeName, String department) {
+        super(employeeId, employeeName, department, ANNUAL_ENTITLEMENT);
     }
 
     @Override
     public String getEmployeeType() {
         return "Intern";
+    }
+
+    @Override
+    protected int getMaxDaysPerRequest() {
+        return MAX_DAYS_PER_REQUEST;
     }
 }

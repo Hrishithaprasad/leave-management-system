@@ -1,29 +1,28 @@
+/**
+ * Full-time employees: 24 days a year, up to 10 days per request.
+ */
 public class FullTimeEmployee extends Employee {
 
-    public FullTimeEmployee(int id, String name, String dept) {
-        super(id, name, dept, 24);
+    private static final int ANNUAL_ENTITLEMENT = 24;
+    private static final int MAX_DAYS_PER_REQUEST = 10;
+
+    public FullTimeEmployee(int employeeId, String employeeName, String department) {
+        this(employeeId, employeeName, department, ANNUAL_ENTITLEMENT);
     }
 
-    @Override
-    public void applyLeave(int d) {
-        if (d <= 0) {
-            System.out.println("Invalid number of days.");
-            return;
-        }
-        if (d > 10) {
-            System.out.println(getEmployeeName() + ": full-time employees can take at most 10 days at a time.");
-            return;
-        }
-        if (d > checkLeaveBalance()) {
-            System.out.println(getEmployeeName() + ": insufficient leave balance.");
-            return;
-        }
-        deduct(d);
-        System.out.println(getEmployeeName() + " (Full-Time) leave approved for " + d + " day(s).");
+    // protected: lets a subclass such as Manager reuse this class with its own entitlement
+    protected FullTimeEmployee(int employeeId, String employeeName, String department,
+                               int annualEntitlement) {
+        super(employeeId, employeeName, department, annualEntitlement);
     }
 
     @Override
     public String getEmployeeType() {
         return "Full-Time";
+    }
+
+    @Override
+    protected int getMaxDaysPerRequest() {
+        return MAX_DAYS_PER_REQUEST;
     }
 }

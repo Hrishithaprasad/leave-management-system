@@ -1,26 +1,16 @@
-public class Manager extends Employee {
-    private int bonusLeaveDays = 5;
+/**
+ * Managers are full-time employees with extra benefits:
+ * 30 base days plus 5 bonus days a year, and up to 15 days per request.
+ * Only what differs from FullTimeEmployee is written here.
+ */
+public class Manager extends FullTimeEmployee {
 
-    public Manager(int id, String name, String dept) {
-        super(id, name, dept, 35);   // 30 base days + 5 bonus days
-    }
+    private static final int BASE_ENTITLEMENT = 30;
+    private static final int BONUS_LEAVE_DAYS = 5;
+    private static final int MAX_DAYS_PER_REQUEST = 15;
 
-    @Override
-    public void applyLeave(int d) {
-        if (d <= 0) {
-            System.out.println("Invalid number of days.");
-            return;
-        }
-        if (d > 15) {
-            System.out.println(getEmployeeName() + ": managers can take at most 15 days at a time.");
-            return;
-        }
-        if (d > checkLeaveBalance()) {
-            System.out.println(getEmployeeName() + ": insufficient leave balance.");
-            return;
-        }
-        deduct(d);
-        System.out.println(getEmployeeName() + " (Manager) leave approved for " + d + " day(s).");
+    public Manager(int employeeId, String employeeName, String department) {
+        super(employeeId, employeeName, department, BASE_ENTITLEMENT + BONUS_LEAVE_DAYS);
     }
 
     @Override
@@ -29,8 +19,17 @@ public class Manager extends Employee {
     }
 
     @Override
+    protected int getMaxDaysPerRequest() {
+        return MAX_DAYS_PER_REQUEST;
+    }
+
+    public int getBonusLeaveDays() {
+        return BONUS_LEAVE_DAYS;
+    }
+
+    @Override
     public void displayDetails() {
         super.displayDetails();
-        System.out.println("   Bonus leave days: " + bonusLeaveDays);
+        System.out.println("   Bonus leave days (manager benefit): " + BONUS_LEAVE_DAYS);
     }
 }

@@ -1,29 +1,22 @@
+/**
+ * Part-time employees: 12 days a year, up to 5 days per request.
+ */
 public class PartTimeEmployee extends Employee {
 
-    public PartTimeEmployee(int id, String name, String dept) {
-        super(id, name, dept, 12);
-    }
+    private static final int ANNUAL_ENTITLEMENT = 12;
+    private static final int MAX_DAYS_PER_REQUEST = 5;
 
-    @Override
-    public void applyLeave(int d) {
-        if (d <= 0) {
-            System.out.println("Invalid number of days.");
-            return;
-        }
-        if (d > 5) {
-            System.out.println(getEmployeeName() + ": part-time employees can take at most 5 days at a time.");
-            return;
-        }
-        if (d > checkLeaveBalance()) {
-            System.out.println(getEmployeeName() + ": insufficient leave balance.");
-            return;
-        }
-        deduct(d);
-        System.out.println(getEmployeeName() + " (Part-Time) leave approved for " + d + " day(s).");
+    public PartTimeEmployee(int employeeId, String employeeName, String department) {
+        super(employeeId, employeeName, department, ANNUAL_ENTITLEMENT);
     }
 
     @Override
     public String getEmployeeType() {
         return "Part-Time";
+    }
+
+    @Override
+    protected int getMaxDaysPerRequest() {
+        return MAX_DAYS_PER_REQUEST;
     }
 }
