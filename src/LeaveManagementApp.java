@@ -7,5 +7,14 @@ public class LeaveManagementApp {
         e1.displayDetails();
         e2.displayDetails();
         e3.displayDetails();
+
+        e1.applyLeave(5);
+        e2.applyLeave(20);
+        e3.applyLeave(0);
+        e1.cancelLeave(2);
+        e1.cancelLeave(10);
+
+        System.out.println("Anita's balance: " + e1.checkLeaveBalance());
+        e1.displayDetails();
     }
 }

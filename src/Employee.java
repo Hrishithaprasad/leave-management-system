@@ -1,5 +1,5 @@
 /**
- * Stage 1a: the Employee class with its data and a way to display it.
+ * Stage 1: a single concrete Employee class with the basic leave operations.
  */
 public class Employee {
     private int employeeId;
@@ -14,6 +14,34 @@ public class Employee {
         this.department = department;
         this.leaveBalance = leaveBalance;
         this.leaveTaken = 0;
+    }
+
+    public void applyLeave(int days) {
+        if (days <= 0) {
+            System.out.println("Invalid number of days.");
+            return;
+        }
+        if (days > leaveBalance) {
+            System.out.println("Insufficient leave balance.");
+            return;
+        }
+        leaveBalance -= days;
+        leaveTaken += days;
+        System.out.println(employeeName + " applied for " + days + " day(s). Balance: " + leaveBalance);
+    }
+
+    public void cancelLeave(int days) {
+        if (days <= 0 || days > leaveTaken) {
+            System.out.println("Cannot cancel " + days + " day(s).");
+            return;
+        }
+        leaveBalance += days;
+        leaveTaken -= days;
+        System.out.println(employeeName + " cancelled " + days + " day(s). Balance: " + leaveBalance);
+    }
+
+    public int checkLeaveBalance() {
+        return leaveBalance;
     }
 
     public void displayDetails() {
