@@ -4,7 +4,8 @@ public class LeaveManagementApp {
         Employee[] staff = {
             new FullTimeEmployee(101, "Anita Rao", "Engineering"),
             new PartTimeEmployee(102, "Ravi Kumar", "HR"),
-            new Intern(103, "Meera Nair", "Finance")
+            new Intern(103, "Meera Nair", "Finance"),
+            new Manager(104, "Karthik Iyer", "Operations")
         };
 
         for (Employee emp : staff) {
