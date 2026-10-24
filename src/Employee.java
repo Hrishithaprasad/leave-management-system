@@ -1,8 +1,8 @@
 /**
- * Stage 1: a single concrete Employee class with the basic leave operations.
+ * Stage 2: Employee becomes abstract. Each employee type decides its own leave rule.
  */
-public class Employee {
-    private int employeeId;
+public abstract class Employee {
+    private final int employeeId;
     private String employeeName;
     private String department;
     private int leaveBalance;
@@ -13,31 +13,27 @@ public class Employee {
         this.employeeName = employeeName;
         this.department = department;
         this.leaveBalance = leaveBalance;
-        this.leaveTaken = 0;
     }
 
-    public void applyLeave(int days) {
-        if (days <= 0) {
-            System.out.println("Invalid number of days.");
-            return;
-        }
-        if (days > leaveBalance) {
-            System.out.println("Insufficient leave balance.");
-            return;
-        }
-        leaveBalance -= days;
-        leaveTaken += days;
-        System.out.println(employeeName + " applied for " + days + " day(s). Balance: " + leaveBalance);
+    // Abstraction: every type must define its own rule and its own label
+    public abstract void applyLeave(int d);
+
+    public abstract String getEmployeeType();
+
+    // Overloading: same name, different parameters
+    public void applyLeave(int d, String reason) {
+        applyLeave(d);
+        System.out.println("   Reason: " + reason);
     }
 
-    public void cancelLeave(int days) {
-        if (days <= 0 || days > leaveTaken) {
-            System.out.println("Cannot cancel " + days + " day(s).");
+    public void cancelLeave(int d) {
+        if (d <= 0 || d > leaveTaken) {
+            System.out.println("Cannot cancel " + d + " day(s).");
             return;
         }
-        leaveBalance += days;
-        leaveTaken -= days;
-        System.out.println(employeeName + " cancelled " + days + " day(s). Balance: " + leaveBalance);
+        leaveBalance += d;
+        leaveTaken -= d;
+        System.out.println(employeeName + " cancelled " + d + " day(s). Balance: " + leaveBalance);
     }
 
     public int checkLeaveBalance() {
@@ -45,9 +41,14 @@ public class Employee {
     }
 
     public void displayDetails() {
-        System.out.println("ID: " + employeeId + " | Name: " + employeeName
-                + " | Department: " + department
-                + " | Leave Balance: " + leaveBalance + " | Leave Taken: " + leaveTaken);
+        System.out.println("ID: " + employeeId + " | " + employeeName + " | " + getEmployeeType()
+                + " | " + department + " | Balance: " + leaveBalance + " | Taken: " + leaveTaken);
+    }
+
+    // protected: only subclasses should change the balance directly
+    protected void deduct(int d) {
+        leaveBalance -= d;
+        leaveTaken += d;
     }
 
     public String getEmployeeName() {

@@ -1,20 +1,24 @@
 public class LeaveManagementApp {
     public static void main(String[] args) {
-        Employee e1 = new Employee(101, "Anita Rao", "Engineering", 20);
-        Employee e2 = new Employee(102, "Ravi Kumar", "HR", 15);
-        Employee e3 = new Employee(103, "Meera Nair", "Finance", 10);
+        FullTimeEmployee anita = new FullTimeEmployee(101, "Anita Rao", "Engineering");
+        PartTimeEmployee ravi = new PartTimeEmployee(102, "Ravi Kumar", "HR");
+        Intern meera = new Intern(103, "Meera Nair", "Finance");
 
-        e1.displayDetails();
-        e2.displayDetails();
-        e3.displayDetails();
+        anita.displayDetails();
+        ravi.displayDetails();
+        meera.displayDetails();
 
-        e1.applyLeave(5);
-        e2.applyLeave(20);
-        e3.applyLeave(0);
-        e1.cancelLeave(2);
-        e1.cancelLeave(10);
+        anita.applyLeave(8);
+        ravi.applyLeave(8);
+        meera.applyLeave(8);
 
-        System.out.println("Anita's balance: " + e1.checkLeaveBalance());
-        e1.displayDetails();
+        anita.applyLeave(3, "Family function");
+        ravi.applyLeave(2);
+        meera.applyLeave(2);
+        ravi.cancelLeave(1);
+
+        System.out.println(anita.getEmployeeName() + " balance: " + anita.checkLeaveBalance());
+        System.out.println(ravi.getEmployeeName() + " balance: " + ravi.checkLeaveBalance());
+        System.out.println(meera.getEmployeeName() + " balance: " + meera.checkLeaveBalance());
     }
 }
