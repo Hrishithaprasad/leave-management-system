@@ -1,24 +1,28 @@
 public class LeaveManagementApp {
     public static void main(String[] args) {
-        FullTimeEmployee anita = new FullTimeEmployee(101, "Anita Rao", "Engineering");
-        PartTimeEmployee ravi = new PartTimeEmployee(102, "Ravi Kumar", "HR");
-        Intern meera = new Intern(103, "Meera Nair", "Finance");
+        // Polymorphism: one array holds every employee type
+        Employee[] staff = {
+            new FullTimeEmployee(101, "Anita Rao", "Engineering"),
+            new PartTimeEmployee(102, "Ravi Kumar", "HR"),
+            new Intern(103, "Meera Nair", "Finance")
+        };
 
-        anita.displayDetails();
-        ravi.displayDetails();
-        meera.displayDetails();
+        for (Employee emp : staff) {
+            emp.displayDetails();
+        }
 
-        anita.applyLeave(8);
-        ravi.applyLeave(8);
-        meera.applyLeave(8);
+        System.out.println("-- Everyone applies for 8 days --");
+        for (Employee emp : staff) {
+            emp.applyLeave(8);
+        }
 
-        anita.applyLeave(3, "Family function");
-        ravi.applyLeave(2);
-        meera.applyLeave(2);
-        ravi.cancelLeave(1);
+        staff[0].applyLeave(3, "Family function");
+        staff[1].applyLeave(2);
+        staff[2].applyLeave(2);
+        staff[1].cancelLeave(1);
 
-        System.out.println(anita.getEmployeeName() + " balance: " + anita.checkLeaveBalance());
-        System.out.println(ravi.getEmployeeName() + " balance: " + ravi.checkLeaveBalance());
-        System.out.println(meera.getEmployeeName() + " balance: " + meera.checkLeaveBalance());
+        for (Employee emp : staff) {
+            System.out.println(emp.getEmployeeName() + " balance: " + emp.checkLeaveBalance());
+        }
     }
 }
